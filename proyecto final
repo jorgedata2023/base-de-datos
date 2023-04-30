@@ -1,0 +1,237 @@
+USE [Water_tech]
+GO
+/****** Object:  Database [Water_tech]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+CREATE DATABASE [Water_tech]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Water_tech', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Water_tech.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Water_tech_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Water_tech_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [Water_tech] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Water_tech].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Water_tech] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Water_tech] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Water_tech] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Water_tech] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Water_tech] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Water_tech] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Water_tech] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Water_tech] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Water_tech] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Water_tech] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Water_tech] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Water_tech] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Water_tech] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Water_tech] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Water_tech] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [Water_tech] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Water_tech] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Water_tech] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Water_tech] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Water_tech] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Water_tech] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Water_tech] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Water_tech] SET RECOVERY FULL 
+GO
+ALTER DATABASE [Water_tech] SET  MULTI_USER 
+GO
+ALTER DATABASE [Water_tech] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Water_tech] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Water_tech] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Water_tech] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Water_tech] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Water_tech] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'Water_tech', N'ON'
+GO
+ALTER DATABASE [Water_tech] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [Water_tech] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [Water_tech]
+GO
+/****** Object:  Table [dbo].[departamentos]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[departamentos](
+	[departamento_id] [int] NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[descripcion] [varchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[departamento_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[detalle_pedido]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[detalle_pedido](
+	[id] [int] NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[precio] [float] NOT NULL,
+	[producto_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[empleados_administrativos]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[empleados_administrativos](
+	[empleado_id] [int] NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[apellido] [varchar](50) NOT NULL,
+	[direccion] [varchar](255) NULL,
+	[fecha_nacimiento] [date] NULL,
+	[fecha_contratacion] [date] NULL,
+	[identificacion] [varchar](20) NULL,
+	[departamento_id] [int] NOT NULL,
+	[salario_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[empleado_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[empleados_operarios]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[empleados_operarios](
+	[empleado_id] [int] NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[apellido] [varchar](50) NOT NULL,
+	[direccion] [varchar](255) NULL,
+	[fecha_nacimiento] [date] NULL,
+	[fecha_contratacion] [date] NULL,
+	[identificacion] [varchar](20) NULL,
+	[departamento_id] [int] NOT NULL,
+	[salario_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[empleado_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[facturas]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[facturas](
+	[factura_id] [int] NOT NULL,
+	[fecha] [date] NOT NULL,
+	[total] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[factura_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[facturas_final]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[facturas_final](
+	[factura_id] [int] NOT NULL,
+	[fecha] [date] NOT NULL,
+	[total] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[factura_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[nomina]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[nomina](
+	[salario_id] [int] NOT NULL,
+	[salario] [decimal](10, 2) NOT NULL,
+	[fecha_inicio] [date] NOT NULL,
+	[fecha_fin] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[salario_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[pedido_de_producto]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[pedido_de_producto](
+	[orden_compra_id] [int] NOT NULL,
+	[fecha] [date] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[orden_compra_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[venta_de_producto]    Script Date: 22/4/2023 3:09:16 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[venta_de_producto](
+	[orden_venta_id] [int] NOT NULL,
+	[fecha] [date] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[orden_venta_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+USE [master]
+GO
+ALTER DATABASE [Water_tech] SET  READ_WRITE 
+GO
